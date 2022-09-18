@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+  <script>
+    $(document).ready(function()
+    {
+      // $("button").click(function(){
+        $.get("https://api.thingspeak.com/channels/1858441/feeds.json?api_key=ACJ4WHW86KGB09FS&results=2",function(data,status)
+        {
+          var json=JSON.stringify(data);
+          var jsonformat=$.parseJSON(json);
+          //var jsonParsedArray = JSON.parse(json);
+          var gyrometer=jsonformat["feeds"][0].field1;
+          document.getElementById("gyrometerValue").innerText=jsonformat["feeds"][0].field1;
+          document.getElementById("p1").innerText=json;
+          if(gyrometer>500)
+          {
+            document.getElementById("condition").innerText="Danger, need help!";
+            $("#condition").css("background-color", "red");
+          }
+          else
+          {
+            document.getElementById("condition").innerText="Your child is safe!";
+            $("#condition").css("background-color", "green");
+          }
+        });
+      // });
+    });
+  </script>
+<style>
+* {box-sizing: border-box;}
+
+body { 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  overflow: hidden;
+  padding: 20px 10px;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+
+
+
+
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+</style>
+</head>
+
+
+
+
+
+
+
+<body>
+
+<div class="bg-info">
+<div class="header">
+  <a href="#default" class="logo"><img src="EDASLOGO.png" height="50px" width="110px"></a>
+  <div class="header-right">
+    <a href="serviceProvider.html">Service Provider</a>
+    <a href="notifications.html">Notifications</a>
+    <a class="active" href="profile.html">Profile</a>
+  </div>
+</div>
+</div>
+
+
+<div class="sidebar">
+  <a href="savedAudioFiles.html">Saved Audio Files</a>
+  <a href="analysis.html">Analysis</a>
+  <a href="wishlist.html">Wishlist</a>
+  <a href="sos.html">SOS</a>
+  <a href="quiz.html">Quiz</a>
+</div>
+
+<div class="content">
+  <div class="jumbotron bg-primary">
+    <h1 class="bg-info rounded text-center">Data accessing from cloud</h1>
+    <p id="p1" class="rounded text-center"></p>
+    <h1 class="bg-info rounded text-center">Gyrometer reading</h1>
+    <h1 id="gyrometerValue" class="rounded text-center" style="font-size:50px;"></h1>
+    <h1 class="bg-info rounded text-center">Status</h1>
+    <h2 id="condition" class="rounded text-center"></h2>
+  </div>
+</div>
+
+
+</body>
+</html>
